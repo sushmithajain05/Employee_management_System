@@ -2,8 +2,11 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
+from .models import Employee
 # @login_required(login_url='login')
 # Create your views here.
+def HomePage(request):
+    return render(request,'home.html')
 def SignupPage(request):
     if request.method=='POST':
         uname=request.POST.get('username')
@@ -32,3 +35,20 @@ def LoginPage(request):
             return HttpResponse ("Username or Password is incorrect!!!")
 
     return render (request,'login.html')
+
+def emp_add(request):
+    if request.method=='POST':
+        print("Added")
+        employees_id=request.POST.get("employee_id")
+        employees_name=request.POST.get("employee_name")
+        email=request.POST.get("email")
+        phone_number=request.POST.get("phone_number")
+        job_title=request.POST.get("job title")
+
+        e=Employee()
+        e.employee_id=employees_id
+        e.employee_name=employees_name
+        e.email=email
+        e.phone_number=phone_number
+        e.job_title=job_title
+    return render(request,"add_emp.html",{})

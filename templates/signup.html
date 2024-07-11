@@ -10,6 +10,9 @@ form
     margin: 0px 10px; 
     color: rgb(122, 210, 210);
 }
+a{
+	color: rgb(13, 13, 213);
+}
 
 h2 {
   margin-top: 2px;
@@ -46,6 +49,7 @@ h2 {
 			<div class="panel panel-primary">
 				<div class="panel-body">
 					<form method="POST" action="#" role="form">
+						{% csrf_token %} 
 						<div class="form-group">
 							<h2>Create account</h2>
 						</div>
@@ -71,7 +75,7 @@ h2 {
 						</div>
 						
 						<hr>
-						<p></p>Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+						<p>Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
 					</form>
 				</div>
 			</div>
