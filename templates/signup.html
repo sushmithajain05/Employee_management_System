@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <title>Signup Page</title>
-    
 <style>
 
 form 
@@ -42,38 +41,37 @@ h2 {
           <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 
-<body>
-    
+<body>  
     <div class="container">
 		<div class="row">
 			<div class="panel panel-primary">
 				<div class="panel-body">
-					<form method="POST" action="#" role="form">
+					<form method="POST" action="{% url 'signup' %}" role="form">
 						{% csrf_token %} 
+						
 						<div class="form-group">
 							<h2>Create account</h2>
 						</div>
 						<div class="form-group">
-							<label class="control-label" for="signupName">Username</label>
-							<input id="signupName" type="text" maxlength="50" class="form-control" placeholder="Enter username">
+							<label class="control-label" for="username">Username</label>
+							<input id="username" type="text" maxlength="50" class="form-control" placeholder="Enter username">
 						</div>
 						<div class="form-group">
-							<label class="control-label" for="signupEmail">Email</label>
-							<input id="signupEmail" type="email" maxlength="50" class="form-control" placeholder="Enter email">
+							<label class="control-label" for="email">Email</label>
+							<input id="email" type="email" maxlength="50" class="form-control" placeholder="Enter email">
 						</div>
 
 						<div class="form-group">
-							<label class="control-label" for="signupPassword">Password</label>
-							<input id="signupPassword" type="password" maxlength="25" class="form-control"  length="40" required placeholder="Enter password">
+							<label class="control-label" for="Password">Password</label>
+							<input id="Password" type="password" maxlength="25" class="form-control"  length="40" required placeholder="Enter password">
 						</div>
 						<div class="form-group">
-							<label class="control-label" for="signupPasswordagain">confirm password</label>
-							<input id="signupPasswordagain" type="password" maxlength="25" class="form-control" placeholder="Confirm password">
+							<label class="control-label" for="confirm password">confirm password</label>
+							<input id="confirm password" type="password" maxlength="25" class="form-control" placeholder="Confirm password">
 						</div>
 						<div class="form-group">
-							<button id="signupSubmit" type="submit" class="btn btn-info btn-block">Create your account</button>
-						</div>
-						
+							<button id="Submit" type="submit" class="btn btn-info btn-block">Create your account</button>
+						</div>	
 						<hr>
 						<p>Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
 					</form>
@@ -81,6 +79,5 @@ h2 {
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>

@@ -15,7 +15,7 @@
 
   <body>
     {% include 'navbar.html' %}
-    <h1 class="text-center my-4"> Add New Employees</h1>
+    <h1 class="text-center my-4"> update employee</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -25,26 +25,26 @@
                             {% csrf_token %}
                             <div class="md-3">
                                 <label for="employee_id">employee_id</label>
-                                <input name="employee_id" type="text" id="employee_id" class="form-control" placeholder="Enter your employee_id" required>
+                                <input name="employee_id" type="text" id="employee_id" class="form-control" placeholder="Enter your employee_id" required value="{{emp.employee_id}}">
                             </div>
                             <div class="md-3">
                                 <label for="employee_name">employee_name</label>
-                                <input name="employee_name" type="text" id="employee_name" class="form-control" placeholder="enter your name">
+                                <input name="employee_name" type="text" id="employee_name" class="form-control" placeholder="enter your name" value="{{emp.employee_name}}">
                             </div>
                             <div class="md-3">
                                 <label for="email">Email</label>
-                                <input name="employee_email" type="text" id="employee_email" class="form-control" placeholder="Enter email address" required>
+                                <input name="employee_email" type="text" id="employee_email" class="form-control" placeholder="Enter email address" required value="{{emp.email}}">
                             </div>
                             <div class="md-3">
                                 <label for="phone_number">phone_number</label>
-                                <input name="phone_number" type="text" id="phone_number" class="form-control" placeholder="Enter your phone number">
+                                <input name="phone_number" type="text" id="phone_number" class="form-control" placeholder="Enter your phone number" value="{{emp.phone_number}}">
                             </div>
                             <div class="md-3">
                                 <label for="job_title">job Title</label>
-                                <input name="job_title" type="text" id="job_title" class="form-control" placeholder="Enter your job title" required>
+                                <input name="job_title" type="text" id="job_title" class="form-control" placeholder="Enter your job title" required value="{{emp.job_title}}">
                             </div>
                             <div class="container text-center my-4">
-                                <button class="btn btn-primary">Add Employee</button>
+                                <button class="btn btn-primary">Update</button>
                             </div>     
                         </form>
                     </div>
