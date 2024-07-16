@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import Employee
 
 class SignupForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, required=True)
@@ -30,6 +31,11 @@ class LoginForm(forms.Form):
 
 class AttendanceUploadForm(forms.Form):
     file = forms.FileField()
+
+class EmployeeForm(forms.ModelForm):
+    class Meta:
+        model = Employee
+        fields = ['employee_id', 'employee_name', 'email', 'phone_number', 'job_title']
 
 
 

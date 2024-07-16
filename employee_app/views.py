@@ -2,7 +2,7 @@ from django.shortcuts import render,HttpResponse,redirect,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from .models import Employee,Attendance
-from .forms import SignupForm
+from .forms import EmployeeForm, SignupForm
 from django.contrib import messages
 from .forms import LoginForm
 from django.http import Http404
@@ -61,6 +61,7 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 def emp_add(request):
+    
     if request.method=='POST':
         employees_id=request.POST.get("employee_id")
         employees_name=request.POST.get("employee_name")
@@ -88,9 +89,18 @@ def DeletePage(request,employee_id):
     e.delete()
     return redirect("table")
 
-def UpdatePage(request,employee_id):
-    e=Employee.objects.get(employee_id=employee_id)
-    return render(request,"update.html",{})
+def UpdatePage(request, employee_id):
+    e = get_object_or_404(Employee, employee_id=employee_id)
+    
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST, instance=e)
+        if form.is_valid():
+            form.save()
+            return redirect('table')  
+    else:
+        form = EmployeeForm(instance=e)
+    
+    return render(request, 'update.html', {'form': form, 'e': e})
 
 
 def LogoutPage(request):
