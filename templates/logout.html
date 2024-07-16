@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        .button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none; /* Removes underline */
+    color: #fff; /* Text color */
+    background-color: #007bff; /* Button background color */
+    border: none; /* Removes border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Shows a pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.button:hover {
+    background-color: #0056b3; /* Darker background on hover */
+}
+
+.button:active {
+    background-color: #00408d; /* Even darker background when button is clicked */
+}
+    </style>
+</head>
+<body>
+    <h1>Logout Successfully</h1>
+    <a href="{% url 'login' %}" class="button" >Login here</a>
+</body>
+</html>

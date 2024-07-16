@@ -7,11 +7,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Details</title>
+    <title>Attendance Details</title>
 </head>
 <body>
     {% include 'navbar.html' %}
-    <h1 class="text-center my-3">LIST OF ALL THE EMPLOYEES</h1>
+    <h1 class="text-center my-3">Attendance Details for {{ employee.employee_name }}</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -20,30 +20,22 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Employee ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone Number</th>
-                                    <th>Job Title</th>
-                                    <th>Actions</th>
+                                    <th>Attendance ID</th>
+                                    <th>Date</th>
+                                    <th>Present</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for e in emp %}
+                                {% for record in attendance_records %}
                                 <tr>
-                                    <td>{{ e.employee_id }}</td>
-                                    <td><a href="{% url 'employee_attendance' e.employee_id %}">{{ e.employee_name }}</a></td>
-                                    <td>{{ e.email }}</td>
-                                    <td>{{ e.phone_number }}</td>
-                                    <td>{{ e.job_title }}</td>
-                                    <td>
-                                        <a href="/delete/{{ e.employee_id }}" class="btn btn-danger md-sm">Delete</a>
-                                        <a href="/update/{{ e.employee_id }}" class="btn btn-success md-sm">Update</a>
-                                    </td>
+                                    <td>{{ record.attendance_id }}</td>
+                                    <td>{{ record.date }}</td>
+                                    <td>{{ record.present }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+                        <a href="{% url 'table' %}" class="btn btn-primary">Back to Employee List</a>
                     </div>
                 </div>
             </div>

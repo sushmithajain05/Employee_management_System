@@ -1,41 +1,64 @@
-from django.shortcuts import render,HttpResponse,redirect
+from django.shortcuts import render,HttpResponse,redirect,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
-from .models import Employee
+from .models import Employee,Attendance
+from .forms import SignupForm
+from django.contrib import messages
+from .forms import LoginForm
+from django.http import Http404
+import pandas as pd
+from .forms import AttendanceUploadForm
+import openpyxl
+
+
+
 # @login_required(login_url='login')
 # Create your views here.
 def HomePage(request):
     return render(request,'home.html')
 
-def SignupPage(request):
-    if request.method=='POST':
-        username=request.POST.get('username')
-        email=request.POST.get('email')
-        password1=request.POST.get('password1')
-        password2=request.POST.get('password2')
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            
+            # Ensure username is not empty
+            if not username:
+                form.add_error('username', 'Username is required.')
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password)
+                user = authenticate(username=username, password=password)
+                if user:
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    form.add_error(None, 'User authentication failed.')
 
-        if password1!=password2:
-            return HttpResponse("Your password and confirm password are not Same!!")
-        else:
+        # Render the form again with errors if form is not valid or username is missing
+        return render(request, 'signup.html', {'form': form})
+    else:
+        form = SignupForm()
+        return render(request, 'signup.html', {'form': form})
 
-            my_user=User.objects.create_user(username=username,password1=password1)
-            my_user.save()
-            return redirect('login')
-    
-    return render (request,'signup.html')
 
-def LoginPage(request):
-    if request.method=='POST':
-        username=request.POST.get('username')
-        pass1=request.POST.get('pass')
-        user=authenticate(request,username=username,password=pass1)
-        if user is not None:
-            login(request,user)
-            return redirect('signup')
-        else:
-            return HttpResponse ("Username or Password is incorrect!!!")
-
-    return render (request,'login.html')
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('add_emp')
+            else:
+                messages.error(request, 'Invalid username or password.')
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})
 
 def emp_add(request):
     if request.method=='POST':
@@ -53,7 +76,7 @@ def emp_add(request):
         e.phone_number=phone_number
         e.job_title=job_title
         e.save()
-        return redirect("/home/")
+        return redirect("table")
     return render(request,"add_emp.html",{})
 
 def ListPage(request):
@@ -61,11 +84,47 @@ def ListPage(request):
     return render(request,"table.html",{'emp':emp})
 
 def DeletePage(request,employee_id):
-    e=Employee.objects.get(pk=employee_id)
+    e=Employee.objects.get(employee_id=employee_id)
     e.delete()
-    return redirect("/home")
+    return redirect("table")
 
 def UpdatePage(request,employee_id):
-    e=Employee.objects.get(pk=employee_id)
-    return render(request,"update.html",{'emp':emp})
+    e=Employee.objects.get(employee_id=employee_id)
+    return render(request,"update.html",{})
+
+
+def LogoutPage(request):
+    return render(request,'logout.html')
+
+def upload_attendance(request):
+    if request.method == 'POST':
+        form = AttendanceUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            excel_file = request.FILES['file']
+            wb = openpyxl.load_workbook(excel_file)
+            sheet = wb.active
+
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                attendance_id, employee_id, date, present = row
+                employee = Employee.objects.get(employee_id=employee_id)
+                Attendance.objects.create(
+                    attendance_id=attendance_id,
+                    employee_id=employee,
+                    date=date,
+                    present=present,
+                )
+            return redirect('attendance_list')
+    else:
+        form = AttendanceUploadForm()
+    return render(request, 'upload_attendance.html', {'form': form})
+
+def employee_attendance(request, employee_id):
+    employee = get_object_or_404(Employee, employee_id=employee_id)
+    attendance_records = Attendance.objects.filter(employee_id=employee)
+    return render(request, 'employee_attendance.html', {
+        'employee': employee,
+        'attendance_records': attendance_records,
+    })
+
+
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance List</title>
+</head>
+<body>
+    <h1>Attendance List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Attendance ID</th>
+                <th>Employee ID</th>
+                <th>Date</th>
+                <th>Present</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in attendances %}
+                <tr>
+                    <td>{{ attendance.attendance_id }}</td>
+                    <td>{{ attendance.employee_id.id }}</td>
+                    <td>{{ attendance.date }}</td>
+                    <td>{{ attendance.present }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'upload_attendance' %}">Upload Attendance</a>
+</body>
+</html>

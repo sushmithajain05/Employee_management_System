@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Attendance</title>
+</head>
+<body>
+    <h1>Upload Attendance</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+    <a href="{% url 'attendance_list' %}">Back to Attendance List</a>
+</body>
+</html>
