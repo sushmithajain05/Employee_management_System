@@ -1,73 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-
-      <title>Login Form</title>
-
-      <style>
-
-#login .container #login-row #login-column #login-box {
-  margin-top: 120px;
-  max-width: 600px;
-  height: 320px;
-  border: 1px solid #9C9C9C;
-  background-color: #EAEAEA;
-}
-#login .container #login-row #login-column #login-box #login-form {
-  padding: 20px;
-}
-#login .container #login-row #login-column #login-box #login-form #register-link {
-  margin-top: -85px;
-}
-
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none; /* Removes underline */
-    color: #fff; /* Text color */
-    background-color: #007bff; /* Button background color */
-    border: none; /* Removes border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Shows a pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth background color transition */
-}
-
-.button:hover {
-    background-color: #0056b3; /* Darker background on hover */
-}
-
-.button:active {
-    background-color: #00408d; /* Even darker background when button is clicked */
-}
-      </style>
+<head>
+    <title>Login Form</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: #d1ecf1; /* Bootstrap 'info' color */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #login-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        #login-box form {
+            display: flex;
+            flex-direction: column;
+        }
+        #login-box button {
+            background-color: #007bff; /* Bootstrap 'primary' color */
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        #login-box button:hover {
+            background-color: #0056b3; /* Darker shade of blue */
+        }
+        #login-box .button {
+            color: #007bff; /* Link color */
+        }
+    </style>
 </head>
-
 <body>
-      <div id="login">
-          <div class="container">
-              <div id="login-row" class="row justify-content-center align-items-center">
-                  <div id="login-column" class="col-md-6">
-                      <div id="login-box" class="col-md-12">
-                        <form method="post">
-                          {% csrf_token %}
-                          {{ form.as_p }}
-                          <button type="submit">Login</button>
-                      </form>
-                      <p>Don't have an account? <a href="{% url 'signup' %}" class="button">Register here</a></p>
-                  
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </body>
-
+    <div id="login-box" class="col-md-6 col-lg-4">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'signup' %}" class="button">Register here</a></p>
+    </div>
+</body>
 </html>
-
-

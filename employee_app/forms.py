@@ -14,6 +14,11 @@ class SignupForm(forms.ModelForm):
             'username': forms.TextInput(attrs={'required': True}),
             'email': forms.EmailInput(attrs={'required': True}),
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)  # Correct way to call super
+        self.fields['username'].help_text = None  # Remove the help text for the username field
+
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")

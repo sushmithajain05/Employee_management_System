@@ -13,6 +13,7 @@ urlpatterns = [
     path('logout/', views.LogoutPage, name='logout'),
     path('attendance_list/', views.upload_attendance, name='attendance_list'),
     path('upload_attendance/', views.upload_attendance, name='upload_attendance'),
-    path('attendance/<int:employee_id>/', views.employee_attendance, name='employee_attendance'),
+    path('employee_attendance/<int:employee_id>/', views.employee_attendance, name='employee_attendance'),
+ 
     
 ]

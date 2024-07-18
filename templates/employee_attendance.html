@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <title>Attendance Details</title>
 </head>
 <body>
@@ -40,6 +37,52 @@
                 </div>
             </div>
         </div>
+     
     </div>
+ <!-- Bar Chart -->
+ <div class="row">
+    <div class="col-md-4">
+        <canvas id="attendanceChart"></canvas>
+    </div>
+</div>
+
+    <!-- Include Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('attendanceChart').getContext('2d');
+        var dates = {{ dates|safe }};
+        var presentCounts = {{ present_counts|safe }};
+        var absentCounts = {{ absent_counts|safe }};
+
+        var attendanceChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'Present',
+                        data: presentCounts,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Absent',
+                        data: absentCounts,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
